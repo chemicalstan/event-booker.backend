@@ -25,10 +25,8 @@ const user = id => {
     });
 };
 const event = ids => {
-  console.log("hahahah")
   return Event.find({ _id: { $in: ids } })
     .then(events => {
-      console.log(events)
       return events.map(event => {
         return {
           ...event._doc,
@@ -150,7 +148,7 @@ app.use(
         return event
           .save()
           .then(result => {
-            createdEvent = { ...result._doc };
+            createdEvent = { ...result._doc, _id:result.id, creator: user.bind(this, result._doc.creator) };
             return User.findById("613386ffd5a87e1938ab66a6");
           })
           .then(user => {
